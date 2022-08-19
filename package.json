@@ -8,7 +8,19 @@
   "author": "GKB",
   "license": "MIT",
   "scripts": {
+    "eslint": "eslint src --ext .ts",
     "push": "clasp push",
-    "start": "yarn push && clasp run"
+    "start": "yarn eslint && yarn push && clasp run"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-typescript": "^0.14.0",
+    "typescript": "*",
+    "typescript-eslint-parser": "^22.0.0"
   }
 }
