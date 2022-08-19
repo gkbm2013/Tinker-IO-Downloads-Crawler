@@ -38,7 +38,7 @@ const createConfig = (filename) => ({
 });
 
 // Source: https://github.com/jaebradley/example-rollup-library/blob/master/rollup.config.js
-const configs = fs.readdirSync("./src").map((filename) => createConfig(filename));
+const configs = fs.readdirSync("./src", { withFileTypes: true }).filter(dirent => dirent.isFile()).map(dirent => dirent.name).map((filename) => createConfig(filename));
 
 
 export default configs;
