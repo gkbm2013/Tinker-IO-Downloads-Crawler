@@ -8,10 +8,10 @@
   "author": "GKB",
   "license": "MIT",
   "scripts": {
-    "rollup": "rollup --config",
     "eslint": "eslint src --ext .ts",
-    "push": "clasp push",
-    "start": "yarn eslint && yarn push && clasp run"
+    "build": "yarn eslint && rollup --config",
+    "push": "yarn build && clasp push",
+    "start": "yarn push && clasp run"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.10",
