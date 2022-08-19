@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "@types/google-apps-script": "^1.0.54",
-    "clasp": "^1.0.0"
+    "clasp": "^1.0.0",
+    "uri-js": "^4.4.1"
   },
   "name": "Tinker-IO-downloads-crawler",
   "version": "1.0.0",
