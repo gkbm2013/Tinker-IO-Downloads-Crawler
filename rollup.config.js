@@ -1,5 +1,6 @@
 import { babel } from "@rollup/plugin-babel";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import * as fs from "fs";
 
 const extensions = [".ts", ".js"];
@@ -24,6 +25,7 @@ const plugins = [
         mainFields: ["jsnext:main", "main"]
     }),
     babel({ extensions, babelHelpers: "runtime" }),
+    commonjs(),
 ];
 
 const createConfig = (filename) => ({
