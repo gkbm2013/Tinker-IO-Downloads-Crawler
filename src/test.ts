@@ -1,4 +1,5 @@
 import CurseForgeApi from "./libs/curseforge";
+import Talbe from "./libs/table";
 
 function testGetMcVersions() {
     let scriptProperties = null;
@@ -30,4 +31,13 @@ function testGetModFiles() {
     }
     const api = new CurseForgeApi(apiKey);
     return api.getModFiles(229503);
+}
+
+function testInsertTable() {
+    const spreadSheet = SpreadsheetApp.openById("145xJiXMwozR8AyCxW1mjXgMZ0UWxNIcAAORbdGysjgQ");
+    const table = new Talbe(spreadSheet, "test", ["time", "counts"]);
+    table.insert([
+        {"time": new Date(), "counts": 10},
+        {"time": new Date(), "counts": 20},
+    ]);
 }
