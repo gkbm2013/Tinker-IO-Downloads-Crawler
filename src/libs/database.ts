@@ -11,4 +11,8 @@ export class DownloadsTable extends Table {
         const keysOfProps = keys<DownloadCount>();
         super(spreadSheet, tableName, keysOfProps);
     }
+
+    insert(rows: DownloadCount[]): void {
+        super.insert(rows);
+    }
 }
