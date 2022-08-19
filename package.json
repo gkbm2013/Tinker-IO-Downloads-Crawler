@@ -6,5 +6,9 @@
   "name": "Tinker-IO-downloads-crawler",
   "version": "1.0.0",
   "author": "GKB",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "push": "clasp push",
+    "start": "yarn push && clasp run"
+  }
 }
