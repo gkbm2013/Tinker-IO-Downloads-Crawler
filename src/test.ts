@@ -35,9 +35,18 @@ function testGetModFiles() {
 
 function testInsertTable() {
     const spreadSheet = SpreadsheetApp.openById("145xJiXMwozR8AyCxW1mjXgMZ0UWxNIcAAORbdGysjgQ");
-    const table = new Talbe(spreadSheet, "test", ["time", "counts"]);
+    const table = new Talbe(spreadSheet, "test", ["time", "counts", "x"]);
     table.insert([
-        {"time": new Date(), "counts": 10},
-        {"time": new Date(), "counts": 20},
+        {"time": new Date(), "counts": 10, "x": 30},
+        {"time": new Date(), "counts": 20, "x": 40},
     ]);
+}
+
+function testUpdateColumn() {
+    const spreadSheet = SpreadsheetApp.openById("145xJiXMwozR8AyCxW1mjXgMZ0UWxNIcAAORbdGysjgQ");
+    const table = new Talbe(spreadSheet, "test", ["time", "counts", "x"]);
+    table.updateColumnNames(["time", "counts", "x", "a", "b"]);
+    return {
+        "col": table.getColumnNames()
+    };
 }

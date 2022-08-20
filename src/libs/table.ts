@@ -9,12 +9,26 @@ class Table {
         this.tableName = tableName;
         this.columnNames = columnNames;
         this.sheet = this.ensureSheet(tableName, columnNames);
+
+        const currentColumns = this.getColumnNames();
+        for (let i = 0; i < columnNames.length; i++) {
+            if (currentColumns[i] !== columnNames[i]) {
+                throw new Error(`The ${i + 1}th column is invalid.`);
+            }
+        }
+        this.columnNames = currentColumns;
     }
 
-    updateColumnNames(newColumnNames: string[]) {
+    getColumnNames(): string[] {
+        const sheet = this.ensureSheet(this.tableName, this.columnNames);
+        return sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    }
+
+    updateColumnNames(newColumnNames: string[]): void {
+        const currentColumns = this.getColumnNames();
         const colsToAdd: string[] = [];
         newColumnNames.forEach((col) => {
-            if (!(col in this.columnNames)) {
+            if (!currentColumns.includes(col)) {
                 colsToAdd.push(col);
             }
         });
