@@ -1,6 +1,6 @@
 import * as URI from "uri-js";
 
-class CurseForgeApi {
+export class CurseForgeApi {
     apiKey: string;
     endpointHost: string;
 
@@ -65,5 +65,3 @@ class CurseForgeApi {
         return files;
     }
 }
-
-export default CurseForgeApi;

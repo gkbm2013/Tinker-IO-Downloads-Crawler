@@ -1,4 +1,4 @@
-import CurseForgeApi from "./libs/curseforge";
+import { CurseForgeApi } from "./libs/curseforge";
 import Talbe from "./libs/table";
 
 function testGetMcVersions() {
