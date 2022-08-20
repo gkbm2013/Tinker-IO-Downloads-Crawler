@@ -1,5 +1,4 @@
 import Table from "./table";
-import { keys } from "ts-transformer-keys";
 
 export interface DownloadCount {
     date: Date,
@@ -8,8 +7,7 @@ export interface DownloadCount {
 
 export class DownloadsTable extends Table {
     constructor(spreadSheet: GoogleAppsScript.Spreadsheet.Spreadsheet, tableName: string) {
-        const keysOfProps = keys<DownloadCount>();
-        super(spreadSheet, tableName, keysOfProps);
+        super(spreadSheet, tableName, ["date", "counts"]);
     }
 
     insert(rows: DownloadCount[]): void {
