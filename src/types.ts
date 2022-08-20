@@ -105,3 +105,102 @@ interface GameVersionsByType {
 interface GetVersionsResponse {
     data: GameVersionsByType[]
 }
+
+interface ModLinks {
+    websiteUrl: string,
+    wikiUrl: string,
+    issuesUrl: string,
+    sourceUrl: string
+}
+
+enum ModStatus {
+    New = 1,
+    ChangesRequired = 2,
+    UnderSoftReview = 3,
+    Approved = 4,
+    Rejected = 5,
+    ChangesMade = 6,
+    Inactive = 7,
+    Abandoned = 8,
+    Deleted = 9,
+    UnderReview = 10
+}
+
+interface Category {
+    id: number,
+    gameId: number,
+    name: string,
+    slug: string,
+    url: string,
+    iconUrl: string,
+    dateModified: string,
+    isClass: boolean | null,
+    classId: number | null,
+    parentCategoryId: number | null,
+    displayIndex: number | null,
+}
+
+interface ModAuthor {
+    id: number,
+    name: string,
+    url: string,
+}
+
+interface ModAsset {
+    id: number,
+    modId: number,
+    title: string,
+    description: string,
+    thumbnailUrl: string,
+    url: string,
+}
+
+enum ModLoaderType {
+    Any = 0,
+    Forge = 1,
+    Cauldron = 2,
+    LiteLoader = 3,
+    Fabric = 4,
+    Quilt = 5,
+}
+
+interface FileIndex {
+    gameVersion: string,
+    fileId: number,
+    filename: string,
+    releaseType: FileReleaseType,
+    gameVersionTypeId: number | null,
+    modLoader: ModLoaderType,
+}
+
+interface Mod {
+    id: number,
+    gameId: number,
+    name: string,
+    slug: string,
+    links: ModLinks,
+    summary: string,
+    status: ModStatus,
+    downloadCount: number,
+    isFeatured: boolean,
+    primaryCategoryId: number,
+    categories: Category[],
+    classId: number | null,
+    authors: ModAuthor[],
+    logo: ModAsset,
+    screenshots: ModAsset[],
+    mainFileId: number,
+    latestFiles: File[],
+    latestFilesIndexes: FileIndex[],
+    dateCreated: string,
+    dateModified: string,
+    dateReleased: string,
+    allowModDistribution: boolean | null,
+    gamePopularityRank: number,
+    isAvailable: boolean,
+    thumbsUpCount: number
+}
+
+interface GetModResponse {
+    data: Mod
+}
