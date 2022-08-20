@@ -88,4 +88,8 @@ export class Table {
         const lastRow = this.sheet.getLastRow();
         this.sheet.getRange(lastRow + 1, 1, rowsToSheet.length, this.columnNames.length).setValues(rowsToSheet);
     }
+
+    getRows(startRow: number, endRow: number): any[][] {
+        return this.sheet.getRange(startRow, 1, endRow-startRow+1, this.sheet.getLastColumn()).getValues();
+    }
 }
