@@ -64,4 +64,14 @@ export class CurseForgeApi {
 
         return files;
     }
+
+    getMod(modId: number): GetModResponse {
+        const requestPath = `/v1/mods/${modId}`;
+        const response = this.fetch(requestPath);
+        if (response.getResponseCode() != 200) {
+            throw new Error(`Server error: ${response.getResponseCode()}`);
+        }
+        const modResp: GetModResponse = JSON.parse(response.getContentText());
+        return modResp;
+    }
 }
