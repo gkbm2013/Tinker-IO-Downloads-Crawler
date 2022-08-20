@@ -66,3 +66,42 @@
 //     const api = new CurseForgeApi(apiKey);
 //     return api.getMod(229503).data.downloadCount;
 // }
+//
+// function testGetLastRow() {
+//     let scriptProperties = null;
+//     try {
+//         scriptProperties = PropertiesService.getScriptProperties();
+//     } catch (e) {
+//         Logger.log(e);
+//         return;
+//     }
+
+//     const spreadsheetId = scriptProperties.getProperty("SPREADSHEET_ID");
+
+//     if (spreadsheetId == null) {
+//         throw Error("Please set property `SPREADSHEET_ID`");
+//     }
+
+//     const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
+//     const columns = ["date", "total_downloads"];
+//     const table = new Table(spreadsheet, "downloads", columns);
+
+//     const allData = [];
+//     const n = 1;
+//     const lastRow = table.sheet.getLastRow();
+//     let i = 1;
+//     let firstRow = null;
+
+//     let data: any[][] | null = null;
+//     do {
+//         firstRow = lastRow-(n*i)+1;
+//         firstRow = (firstRow < 2)? 2 : firstRow;
+//         data = table.getRows(firstRow, lastRow-(n*(i-1)));
+//         allData.unshift(...data);
+//         i++;
+//     } while(firstRow != 2 && allData.length > 0 && allData[0][0] > new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000));
+    
+//     // data = data[0].map((_, colIndex) => data.map(row => row[colIndex]));
+//     // data[0][0]
+//     Logger.log(allData);
+// }
