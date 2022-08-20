@@ -11,6 +11,19 @@ class Table {
         this.sheet = this.ensureSheet(tableName, columnNames);
     }
 
+    updateColumnNames(newColumnNames: string[]) {
+        const colsToAdd: string[] = [];
+        newColumnNames.forEach((col) => {
+            if (!(col in this.columnNames)) {
+                colsToAdd.push(col);
+            }
+        });
+        if (colsToAdd.length > 0) {
+            const sheet = this.ensureSheet(this.tableName, this.columnNames);
+            sheet.getRange(1, sheet.getLastColumn() + 1, 1, colsToAdd.length).setValues([colsToAdd]);
+        }
+    }
+
     isSheetExisted(name: string): boolean {
         const sheet = this.spreadSheet.getSheetByName(name);
         return (sheet != null);
