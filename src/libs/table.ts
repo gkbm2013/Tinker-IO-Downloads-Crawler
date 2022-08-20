@@ -36,6 +36,7 @@ export class Table {
             const sheet = this.ensureSheet(this.tableName, this.columnNames);
             sheet.getRange(1, sheet.getLastColumn() + 1, 1, colsToAdd.length).setValues([colsToAdd]);
         }
+        this.columnNames = this.getColumnNames();
     }
 
     isSheetExisted(name: string): boolean {
