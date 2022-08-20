@@ -1,4 +1,4 @@
-class Table {
+export class Table {
     spreadSheet: GoogleAppsScript.Spreadsheet.Spreadsheet;
     tableName: string;
     columnNames: string[];
@@ -88,5 +88,3 @@ class Table {
         this.sheet.getRange(lastRow + 1, 1, rowsToSheet.length, this.columnNames.length).setValues(rowsToSheet);
     }
 }
-
-export default Table;
