@@ -168,6 +168,15 @@ function getLastFiles(files: File[], releaseType: FileReleaseType): SimpleModFil
     return arrRecommendation;
 }
 
+function clearTable(table: Table) {
+    const toClearNum = table.sheet.getLastRow() - 2 + 1;
+    if (toClearNum <= 0) {
+        return;
+    }
+    table.sheet.deleteRows(2, toClearNum);
+    table.sheet.insertRowsAfter(2, toClearNum);
+}
+
 function updateFileList(spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet, files: File[]) {
     const arrFilesRecommendation: SimpleModFile[] = getLastFiles(files, FileReleaseType.Release);
     const arrFilesBeta: SimpleModFile[] = getLastFiles(files, FileReleaseType.Beta);
@@ -185,14 +194,18 @@ function updateFileList(spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet, f
     const columns = ["displayName", "gameVersion", "fileDate", "downloadCount"];
 
     const tableRecommendation = new Table(spreadsheet, "recommendation", columns);
+    clearTable(tableRecommendation);
     tableRecommendation.insert(arrFilesRecommendation);
 
     const tableBeta = new Table(spreadsheet, "beta", columns);
+    clearTable(tableBeta);
     tableBeta.insert(arrFilesBeta);
 
     const tableAlpha = new Table(spreadsheet, "alpha", columns);
+    clearTable(tableAlpha);
     tableAlpha.insert(arrFilesAlpha);
 
     const tablePopular = new Table(spreadsheet, "popular", columns);
+    clearTable(tablePopular);
     tablePopular.insert(arrPopular);
 }

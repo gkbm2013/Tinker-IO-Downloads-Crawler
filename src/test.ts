@@ -105,3 +105,11 @@
 //     // data[0][0]
 //     Logger.log(allData);
 // }
+
+// function testUpdateFileList() {
+//     const properties = getProperties();
+//     const api = new CurseForgeApi(properties.cfApiKey);
+//     const files = api.getModFiles(properties.modId);
+//     const spreadsheet = SpreadsheetApp.openById(properties.spreadsheetId);
+//     updateFileList(spreadsheet, files);
+// }
