@@ -1,4 +1,4 @@
-# CurseForge Downloads Crawler for Tinker I/O
+# CurseForge Download Count Crawler for Tinker I/O
 
 This is a Google Apps Script project, which is used to fetch the download counts to Google SpreadSheet.
 
