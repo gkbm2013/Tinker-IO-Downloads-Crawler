@@ -111,5 +111,6 @@
 //     const api = new CurseForgeApi(properties.cfApiKey);
 //     const files = api.getModFiles(properties.modId);
 //     const spreadsheet = SpreadsheetApp.openById(properties.spreadsheetId);
-//     updateFileList(spreadsheet, files);
+//     const modInfo = api.getMod(properties.modId).data;
+//     updateFileList(spreadsheet, modInfo.links.websiteUrl, files);
 // }

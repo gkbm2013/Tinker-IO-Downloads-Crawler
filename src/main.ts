@@ -8,6 +8,7 @@ interface Properties {
 }
 
 interface SimpleModFile {
+    id: number,
     displayName: string,
     gameVersion: string,
     fileDate: string,
@@ -59,7 +60,10 @@ function routine() {
 
     const api = new CurseForgeApi(properties.cfApiKey);
     const files: File[] = api.getModFiles(properties.modId);
-    const totalDownloads = api.getMod(properties.modId).data.downloadCount;
+    const modInfo = api.getMod(properties.modId).data;
+    const totalDownloads = modInfo.downloadCount;
+    const modUrl = modInfo.links.websiteUrl;
+
     const spreadsheet = SpreadsheetApp.openById(properties.spreadsheetId);
 
     const table = getDownloadsTable(spreadsheet);
@@ -77,7 +81,7 @@ function routine() {
     table.updateColumnNames(Object.keys(objRow));
     table.insert([objRow]);
 
-    updateFileList(table.spreadSheet, files);
+    updateFileList(table.spreadSheet, modUrl, files);
     updateStatistic(spreadsheet);
 }
 
@@ -158,10 +162,11 @@ function getLastFiles(files: File[], releaseType: FileReleaseType): SimpleModFil
             return new Date(b.fileDate).getTime() - new Date(a.fileDate).getTime();
         })[0];
         arrRecommendation.push({
+            id: file.id,
             displayName: file.displayName,
             gameVersion: file.gameVersions[0],
             fileDate: file.fileDate,
-            downloadCount: file.downloadCount
+            downloadCount: file.downloadCount,
         } as SimpleModFile);
     });
 
@@ -177,12 +182,25 @@ function clearTable(table: Table) {
     table.sheet.insertRowsAfter(2, toClearNum);
 }
 
-function updateFileList(spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet, files: File[]) {
+function prepareFileListData(modUrl: string, simpleModFiles: SimpleModFile[]): object[] {
+    return simpleModFiles.map((modFile => {
+        return {
+            displayName: modFile.displayName,
+            gameVersion: modFile.gameVersion,
+            fileDate: modFile.fileDate,
+            downloadCount: modFile.downloadCount,
+            url: `${modUrl}/files/${modFile.id}`,
+        };
+    }));
+}
+
+function updateFileList(spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet, modUrl: string, files: File[]) {
     const arrFilesRecommendation: SimpleModFile[] = getLastFiles(files, FileReleaseType.Release);
     const arrFilesBeta: SimpleModFile[] = getLastFiles(files, FileReleaseType.Beta);
     const arrFilesAlpha: SimpleModFile[] = getLastFiles(files, FileReleaseType.Alpha);
     const arrPopular: SimpleModFile[] = files.sort((a, b) => b.downloadCount - a.downloadCount).filter((file, index) => index < 5).map(file => {
         return {
+            id: file.id,
             displayName: file.displayName,
             gameVersion: file.gameVersions[0],
             fileDate: file.fileDate,
@@ -191,21 +209,21 @@ function updateFileList(spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet, f
     });
 
 
-    const columns = ["displayName", "gameVersion", "fileDate", "downloadCount"];
+    const columns = ["displayName", "gameVersion", "fileDate", "downloadCount", "url"];
 
     const tableRecommendation = new Table(spreadsheet, "recommendation", columns);
     clearTable(tableRecommendation);
-    tableRecommendation.insert(arrFilesRecommendation);
+    tableRecommendation.insert(prepareFileListData(modUrl, arrFilesRecommendation));
 
     const tableBeta = new Table(spreadsheet, "beta", columns);
     clearTable(tableBeta);
-    tableBeta.insert(arrFilesBeta);
+    tableBeta.insert(prepareFileListData(modUrl, arrFilesBeta));
 
     const tableAlpha = new Table(spreadsheet, "alpha", columns);
     clearTable(tableAlpha);
-    tableAlpha.insert(arrFilesAlpha);
+    tableAlpha.insert(prepareFileListData(modUrl, arrFilesAlpha));
 
     const tablePopular = new Table(spreadsheet, "popular", columns);
     clearTable(tablePopular);
-    tablePopular.insert(arrPopular);
+    tablePopular.insert(prepareFileListData(modUrl, arrPopular));
 }
